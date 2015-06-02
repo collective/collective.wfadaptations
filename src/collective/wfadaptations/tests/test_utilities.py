@@ -6,6 +6,7 @@ from zope.component import getGlobalSiteManager, getUtility
 from zope.interface import implements
 
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
 
 
 class DummyWorkflowAdaptation(object):
@@ -21,6 +22,8 @@ class DummyWorkflowAdaptation(object):
 class TestUtility(unittest.TestCase):
 
     """Test workflow adaptation utility."""
+
+    layer = COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING
 
     def test_register_utility(self):
         gsm = getGlobalSiteManager()
