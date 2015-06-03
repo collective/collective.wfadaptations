@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.wfadaptations\n"
+"POT-Creation-Date: 2015-06-03 14:17+0000\n"
+"PO-Revision-Date: 2015-06-03 16:20+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+"Language: fr\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: ../browser/associate.py:110
+msgid "${message} ${additional}"
+msgstr "${message} ${additional}"
+
+#: ../browser/associate.py:42
+msgid "Associate an adaptation to a workflow"
+msgstr "Associer une adaptation à un workflow"
+
+#: ../browser/associate.py:70
+msgid "Choose parameters for your workflow adaptation"
+msgstr "Choisissez les paramètres pour votre adaptation de workflow"
+
+#: ../browser/associate.py:102
+msgid "The workflow adaptation has been successfully applied."
+msgstr "L'adaptation de workflow a été appliquée avec succès."
+
+#: ../browser/associate.py:106
+msgid "The workflow adaptation has not been successfully applied."
+msgstr "L'adaptation de workflow n'a pas pu être appliquée."
+
+#: ../browser/associate.py:27
+msgid "Workflow"
+msgstr "Workflow"
+
+#: ../browser/associate.py:32
+msgid "Workflow adaptation"
+msgstr "Adaptation de workflow"
+
+#: ../browser/associate.py:33
+msgid "Workflow adaptation to execute on this workflow"
+msgstr "Adaptation de workflow à exécuter sur ce workflow"
