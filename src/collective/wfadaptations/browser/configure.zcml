@@ -17,4 +17,11 @@
         directory="static"
         />
 
+    <browser:page
+        name="associate_workflow_adaptation"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".associate.AssociateWorkflowAdaptation"
+        permission="cmf.ManagePortal"
+        />
+
 </configure>
