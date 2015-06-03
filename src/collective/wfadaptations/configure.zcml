@@ -6,11 +6,12 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="collective.wfadaptations">
 
-    <includeDependencies package="." />
+    <include file="minimal.zcml" />
 
-    <i18n:registerTranslations directory="locales" />
-
-    <include package=".browser" />
-    <include file="vocabularies.zcml" />
+    <utility
+        name="collective.wfadaptations.example"
+        provides=".interfaces.IWorkflowAdaptation"
+        factory=".example.ExampleWorkflowAdaptation"
+        />
 
 </configure>
