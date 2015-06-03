@@ -3,20 +3,10 @@
 import unittest2 as unittest
 
 from zope.component import getGlobalSiteManager, getUtility
-from zope.interface import implements
 
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
-
-
-class DummyWorkflowAdaptation(object):
-
-    implements(IWorkflowAdaptation)
-
-    schemas = []
-
-    def patch_workflow(self):
-        return
 
 
 class TestUtility(unittest.TestCase):
