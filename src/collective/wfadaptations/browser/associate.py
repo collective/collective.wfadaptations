@@ -13,6 +13,7 @@ from plone import api
 from plone.z3cform.layout import FormWrapper
 
 from collective.wfadaptations import _
+from collective.wfadaptations.api import add_applied_adaptation
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
 
@@ -98,6 +99,8 @@ class ParametersForm(Form):
         success, additional_message = adaptation.patch_workflow(
             workflow_name, **data)
         if success:
+            adaptation_name = self.request['form.widgets.adaptation'][0]
+            add_applied_adaptation(adaptation_name, workflow_name)
             message_type = 'info'
             message = _(
                 "The workflow adaptation has been successfully applied.")
