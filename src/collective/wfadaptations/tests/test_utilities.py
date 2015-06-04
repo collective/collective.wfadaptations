@@ -22,6 +22,6 @@ class TestUtility(unittest.TestCase):
             my_wf_adaptation,
             IWorkflowAdaptation,
             'my_wf_adaptation')
-        self.assertEqual(
-            my_wf_adaptation,
-            getUtility(IWorkflowAdaptation, 'my_wf_adaptation'))
+        utility = getUtility(IWorkflowAdaptation, 'my_wf_adaptation')
+        self.assertEqual(my_wf_adaptation, utility)
+        gsm.unregisterUtility(utility, IWorkflowAdaptation, 'my_wf_adaptation')

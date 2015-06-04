@@ -2,33 +2,28 @@
 """Base module for unittesting."""
 
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
-from plone.app.testing import applyProfile
+from plone.app.testing import setRoles
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import PloneSandboxLayer
+from plone.app.testing import PloneWithPackageLayer
+from plone.app.testing import TEST_USER_ID
 from plone.testing import z2
-from zope.configuration import xmlconfig
 
 import collective.wfadaptations
 
 
-class CollectiveWfadaptationsLayer(PloneSandboxLayer):
-
-    defaultBases = (PLONE_FIXTURE,)
-
-    def setUpZope(self, app, configurationContext):
-        xmlconfig.file(
-            'configure.zcml',
-            collective.wfadaptations,
-            context=configurationContext
-        )
+class CollectiveWfadaptationsLayer(PloneWithPackageLayer):
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, 'collective.wfadaptations:default')
+        super(CollectiveWfadaptationsLayer, self).setUpPloneSite(portal)
+        setRoles(portal, TEST_USER_ID, ['Manager'])
 
 
-COLLECTIVE_WFADAPTATIONS_FIXTURE = CollectiveWfadaptationsLayer()
+COLLECTIVE_WFADAPTATIONS_FIXTURE = CollectiveWfadaptationsLayer(
+    zcml_package=collective.wfadaptations,
+    zcml_filename='testing.zcml',
+    gs_profile_id='collective.wfadaptations:default',
+    )
 
 
 COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING = IntegrationTesting(

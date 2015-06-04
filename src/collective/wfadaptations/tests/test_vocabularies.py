@@ -25,18 +25,19 @@ class TestVocabularies(unittest.TestCase):
         my_wf_adaptation = DummyWorkflowAdaptation()
         my_other_wf_adaptation = DummyWorkflowAdaptation()
         another_wf_adaptation = AnotherWorkflowAdaptation()
-        gsm.registerUtility(
-            my_wf_adaptation,
-            IWorkflowAdaptation,
-            'my_wf_adaptation')
-        gsm.registerUtility(
-            my_other_wf_adaptation,
-            IWorkflowAdaptation,
-            'my_other_wf_adaptation')
-        gsm.registerUtility(
-            another_wf_adaptation,
-            IWorkflowAdaptation,
-            'another_wf_adaptation')
+        self.utilities = {
+            'my_wf_adaptation': my_wf_adaptation,
+            'my_other_wf_adaptation': my_other_wf_adaptation,
+            'another_wf_adaptation': another_wf_adaptation,
+        }
+        for name, adaptation in self.utilities.iteritems():
+            gsm.registerUtility(adaptation, IWorkflowAdaptation, name)
+
+    def tearDown(self):
+        gsm = getGlobalSiteManager()
+        for name in self.utilities.keys():
+            utility = getUtility(IWorkflowAdaptation, name)
+            gsm.unregisterUtility(utility, IWorkflowAdaptation, name)
 
     def test_wfadaptations_vocabulary(self):
         vocabulary_factory = getUtility(
