@@ -7,4 +7,10 @@
 
   <include package="ecreall.helpers.testing" />
 
+  <utility
+      name="collective.wfadaptations.example"
+      provides=".interfaces.IWorkflowAdaptation"
+      factory=".example.ExampleWorkflowAdaptation"
+      />
+
 </configure>
