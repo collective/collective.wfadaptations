@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from zope.component import getUtility
-
+"""API for workflow adaptations."""
 from plone import api
 
 
