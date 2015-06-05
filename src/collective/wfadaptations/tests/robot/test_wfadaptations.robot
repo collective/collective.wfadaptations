@@ -62,6 +62,10 @@ Scenario: Warning message if there is now workflow adaptations
    When I go to manage adaptations page
    Then I see a warning message
 
+Scenario: As a manager I want to see Manage Workflow Adaptations link in control panel
+  Given a logged in manager
+   When I go to control panel
+   Then I see Manage Workflow Adaptations link
 
 *** Keywords *****************************************************************
 
@@ -88,6 +92,9 @@ I enter invalid parameters
   Input text  form.widgets.state_name  foobar
   Input text  form.widgets.new_state_title  Internal draft
   Click Button  Save
+
+I go to control panel
+  Go to  ${PLONE_URL}/@@overview-controlpanel
 
 
 # --- THEN -------------------------------------------------------------------
@@ -118,3 +125,7 @@ I see a warning message
   Wait until page contains  Site Map
   Page should not contain  applied-adaptations
   Page should contain  There is no applied workflow adaptations for now
+
+I see Manage Workflow Adaptations link
+  Wait until page contains  Site Map
+  Page should contain link  css=a[href$=manage_workflow_adaptations]
