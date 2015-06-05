@@ -38,7 +38,7 @@ def add_applied_adaptation(adaptation_name, workflow_name, **parameters):
     adaptation is applied
     :type workflow_name: Unicode object
     """
-    by_workflow = applied_adaptations_by_workflows()
+    by_workflow = get_applied_adaptations_by_workflows()
     if (workflow_name in by_workflow and
             adaptation_name in by_workflow[workflow_name]):
         raise AdaptationAlreadyAppliedException
@@ -58,7 +58,7 @@ def add_applied_adaptation(adaptation_name, workflow_name, **parameters):
     api.portal.set_registry_record(RECORD_NAME, record)
 
 
-def applied_adaptations_by_workflows():
+def get_applied_adaptations_by_workflows():
     """Return a list of applied adaptations for each workflow.
 
     :returns: A dict which keys are workflow names and values are the list of
