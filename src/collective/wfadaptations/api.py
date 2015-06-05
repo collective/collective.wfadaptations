@@ -18,7 +18,11 @@ def get_applied_adaptations():
     :returns: The list of applied adaptations
     :rtype: list
     """
-    return api.portal.get_registry_record(RECORD_NAME)
+    record = api.portal.get_registry_record(RECORD_NAME)
+    # deserialize parameters
+    return [{'workflow': info['workflow'],
+             'adaptation': info['adaptation'],
+             'parameters': json.loads(info['parameters'])} for info in record]
 
 
 def add_applied_adaptation(adaptation_name, workflow_name, **parameters):

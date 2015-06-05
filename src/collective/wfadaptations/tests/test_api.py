@@ -24,11 +24,11 @@ class TestAPI(unittest.TestCase):
         applied_adaptations = [
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation1',
-             u'parameters': u''
+             u'parameters': u'{}'
             },
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation2',
-             u'parameters': u''
+             u'parameters': u'{}'
             },
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation2',
@@ -43,7 +43,7 @@ class TestAPI(unittest.TestCase):
         self.assertIn(
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation1',
-             u'parameters': u''
+             u'parameters': {}
             },
             applied_adaptations,
             )
@@ -51,7 +51,7 @@ class TestAPI(unittest.TestCase):
         self.assertIn(
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation2',
-             u'parameters': u''
+             u'parameters': {}
             },
             applied_adaptations,
             )
@@ -59,7 +59,7 @@ class TestAPI(unittest.TestCase):
         self.assertIn(
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation2',
-             u'parameters': u'{"param": "foobar"}'
+             u'parameters': {"param": "foobar"}
             },
             applied_adaptations,
             )
