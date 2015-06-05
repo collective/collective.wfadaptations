@@ -23,7 +23,7 @@
         name="associate_workflow_adaptation"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         class=".settings.AssociateWorkflowAdaptation"
-        template="templates/associate.pt"
+        template="templates/associate_workflow_adaptation.pt"
         permission="cmf.ManagePortal"
         />
 
