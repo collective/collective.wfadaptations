@@ -58,6 +58,9 @@ class TestParametersForm(unittest.TestCase, BaseTest):
 
         # test that the record has been updated
         self.assertIn(
-            {'adaptation': 'dummy_adaptation', 'workflow': 'intranet_workflow'},
+            {'adaptation': 'dummy_adaptation',
+             'workflow': 'intranet_workflow',
+             'parameters': '{"param": "foobar"}'
+            },
             get_applied_adaptations(),
             )

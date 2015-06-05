@@ -12,6 +12,9 @@
         <value_type type="plone.registry.field.TextLine">
           <title>adaptation</title>
         </value_type>
+        <value_type type="plone.registry.field.TextLine">
+          <title>parameters</title>
+        </value_type>
       </value_type>
     </field>
     <value purge="false">

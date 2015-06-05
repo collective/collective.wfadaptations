@@ -100,7 +100,7 @@ class ParametersForm(Form):
             workflow_name, **data)
         if success:
             adaptation_name = self.request['form.widgets.adaptation'][0]
-            add_applied_adaptation(adaptation_name, workflow_name)
+            add_applied_adaptation(adaptation_name, workflow_name, **data)
             message_type = 'info'
             message = _(
                 "The workflow adaptation has been successfully applied.")
