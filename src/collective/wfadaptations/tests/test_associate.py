@@ -60,7 +60,7 @@ class TestParametersForm(unittest.TestCase, BaseTest):
         self.assertIn(
             {'adaptation': 'dummy_adaptation',
              'workflow': 'intranet_workflow',
-             'parameters': '{"param": "foobar"}'
+             'parameters': {"param": "foobar"}
             },
             get_applied_adaptations(),
             )

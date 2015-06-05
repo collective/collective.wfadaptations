@@ -59,7 +59,7 @@ class TestAPI(unittest.TestCase):
         self.assertIn(
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation2',
-             u'parameters': {"param": "foobar"}
+             u'parameters': {u"param": u"foobar"}
             },
             applied_adaptations,
             )
