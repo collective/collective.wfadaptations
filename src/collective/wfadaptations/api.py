@@ -19,6 +19,9 @@ def get_applied_adaptations():
     :rtype: list
     """
     record = api.portal.get_registry_record(RECORD_NAME)
+    if record is None:
+        return []
+
     # deserialize parameters
     return [{'workflow': info['workflow'],
              'adaptation': info['adaptation'],
@@ -35,7 +38,6 @@ def add_applied_adaptation(adaptation_name, workflow_name, **parameters):
     adaptation is applied
     :type workflow_name: Unicode object
     """
-    applied_adaptations = api.portal.get_registry_record(RECORD_NAME)
     by_workflow = applied_adaptations_by_workflows()
     if (workflow_name in by_workflow and
             adaptation_name in by_workflow[workflow_name]):
@@ -48,8 +50,12 @@ def add_applied_adaptation(adaptation_name, workflow_name, **parameters):
         u'parameters': unicode(serialized_params),
         }
 
-    applied_adaptations.append(value)
-    api.portal.set_registry_record(RECORD_NAME, applied_adaptations)
+    record = api.portal.get_registry_record(RECORD_NAME)
+    if record is None:
+        record = []
+
+    record.append(value)
+    api.portal.set_registry_record(RECORD_NAME, record)
 
 
 def applied_adaptations_by_workflows():
@@ -59,8 +65,11 @@ def applied_adaptations_by_workflows():
     applied workflow adaptations for this workflow.
     :rtype: dict
     """
-    result = {}
     applied_adaptations = api.portal.get_registry_record(RECORD_NAME)
+    if applied_adaptations is None:
+        return {}
+
+    result = {}
     for adaptation in applied_adaptations:
         workflow = adaptation['workflow']
         adaptation = adaptation['adaptation']
