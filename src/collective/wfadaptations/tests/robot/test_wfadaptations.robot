@@ -67,6 +67,13 @@ Scenario: As a manager I want to see Manage Workflow Adaptations link in control
    When I go to control panel
    Then I see Manage Workflow Adaptations link
 
+Scenario: I can't apply the same adaptation twice on the same workflow
+  Given a logged in manager
+    When I associate a workflow adaptation with valid parameters
+    And I associate a workflow adaptation with valid parameters
+    Then I see failure message
+
+
 *** Keywords *****************************************************************
 
 # --- Given ------------------------------------------------------------------
@@ -96,6 +103,9 @@ I enter invalid parameters
 I go to control panel
   Go to  ${PLONE_URL}/@@overview-controlpanel
 
+I associate a workflow adaptation with valid parameters
+  I associate a workflow adaptation
+  I enter valid parameters
 
 # --- THEN -------------------------------------------------------------------
 

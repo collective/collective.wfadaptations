@@ -79,3 +79,19 @@ def get_applied_adaptations_by_workflows():
         result[workflow].append(adaptation)
 
     return result
+
+
+def get_applied_adaptations_for_workflow(workflow_name):
+    """Return the list of applied adaptations for workflow_name.
+
+    :param workflow_name: [required] name of the workflow
+    :type workflow_name: Unicode object
+
+    :returns: A list of applied workflow adaptations for this workflow.
+    :rtype: dict
+    """
+    all_applied = get_applied_adaptations_by_workflows()
+    if workflow_name not in all_applied:
+        return []
+    else:
+        return all_applied[workflow_name]

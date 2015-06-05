@@ -7,6 +7,7 @@ from plone import api
 from collective.wfadaptations.api import get_applied_adaptations
 from collective.wfadaptations.api import add_applied_adaptation
 from collective.wfadaptations.api import get_applied_adaptations_by_workflows
+from collective.wfadaptations.api import get_applied_adaptations_for_workflow
 from collective.wfadaptations.api import AdaptationAlreadyAppliedException
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
 
@@ -83,3 +84,12 @@ class TestAPI(unittest.TestCase):
             u'workflow2': [u'adaptation2']
             }
         self.assertEqual(expected, get_applied_adaptations_by_workflows())
+
+    def test_get_applied_adaptations_for_workflow(self):
+        expected = [u'adaptation1', u'adaptation2']
+        self.assertEqual(
+            expected,
+            get_applied_adaptations_for_workflow('workflow1'))
+        self.assertEqual(
+            [],
+            get_applied_adaptations_for_workflow('workflow3'))

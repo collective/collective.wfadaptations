@@ -2,11 +2,11 @@
 """Views to manage workflow adaptations."""
 from zope import schema
 from zope.component import getUtility
-from zope.interface import Interface
 from zope.i18nmessageid import MessageFactory
 
 from Products.Five import BrowserView
 from plone import api
+from plone.supermodel import model
 from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form.interfaces import HIDDEN_MODE
@@ -16,13 +16,14 @@ from z3c.form.field import Fields
 from collective.wfadaptations import _
 from collective.wfadaptations.api import add_applied_adaptation
 from collective.wfadaptations.api import get_applied_adaptations
+from collective.wfadaptations.api import get_applied_adaptations_for_workflow
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
 
 PMF = MessageFactory("plone")
 
 
-class IAssociateWorkflowAdaptation(Interface):
+class IAssociateWorkflowAdaptation(model.Schema):
 
     """View to associate workflow adaptations to workflows."""
 
@@ -98,18 +99,25 @@ class ParametersForm(Form):
 
         adaptation = data.pop('adaptation')
         workflow_name = data.pop('workflow')
-        success, additional_message = adaptation.patch_workflow(
-            workflow_name, **data)
-        if success:
-            adaptation_name = self.request['form.widgets.adaptation'][0]
-            add_applied_adaptation(adaptation_name, workflow_name, **data)
-            message_type = 'info'
-            message = _(
-                "The workflow adaptation has been successfully applied.")
+
+        message_type = 'error'
+        message = _(
+            "The workflow adaptation has not been successfully applied.")
+        already_applied = get_applied_adaptations_for_workflow(workflow_name)
+        adaptation_name = self.request['form.widgets.adaptation'][0]
+
+        # An adaptation can not be applied more than once on a workflow
+        if adaptation_name in already_applied:
+            additional_message = _(
+                "This adaptation is already applied on this workflow.")
         else:
-            message_type = 'error'
-            message = _(
-                "The workflow adaptation has not been successfully applied.")
+            success, additional_message = adaptation.patch_workflow(
+                workflow_name, **data)
+            if success:
+                add_applied_adaptation(adaptation_name, workflow_name, **data)
+                message_type = 'info'
+                message = _(
+                    "The workflow adaptation has been successfully applied.")
 
         if additional_message:
             message = _("${message} ${additional}",
