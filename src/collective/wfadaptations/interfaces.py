@@ -16,5 +16,16 @@ class IWorkflowAdaptation(Interface):
         workflow adaptation""")
 
     def patch_workflow(self, workflow_name, *parameters):
-        """Patch the workflow."""
+        """Patch the workflow.
+
+        :param workflow_name: [required] name of the workflow
+        :type workflow_name: Unicode object
+
+        :param parameters: [required] the parameters needed for the adaptation
+        :type parameters: dict
+
+        :returns: (success, message) where success is a boolean and an
+        additional message that describes the success or the failure.
+        :rtype: (bool, str)
+        """
         pass

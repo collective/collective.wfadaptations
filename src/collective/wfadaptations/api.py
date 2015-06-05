@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 """API for workflow adaptations."""
 import json
+import logging
+
+from zope.component.interfaces import ComponentLookupError
+from zope.component import getUtility
 
 from plone import api
 
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
+
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
+logger = logging.getLogger('collective.wfadaptations')
 
 
 class AdaptationAlreadyAppliedException(Exception):
@@ -95,3 +102,44 @@ def get_applied_adaptations_for_workflow(workflow_name):
         return []
     else:
         return all_applied[workflow_name]
+
+
+def apply_from_registry():
+    """Apply workflow adaptations from registry settings.
+
+    :returns: The number of success and errors that occured during the process.
+    :rtype: (int, int)
+    """
+    errors = 0
+    success = 0
+    logger.info("Apply workflow adaptations from registry.")
+    for info in get_applied_adaptations():
+        adaptation_name = info['adaptation']
+        try:
+            adaptation = getUtility(IWorkflowAdaptation, adaptation_name)
+        except ComponentLookupError:
+            logger.error(
+                "The adaptation '{}' has not been found.".format(
+                    adaptation_name))
+            errors += 1
+            continue
+
+        workflow_name = info['workflow']
+        wtool = api.portal.get_tool('portal_workflow')
+        if workflow_name not in wtool:
+            logger.error("There is no '{}' workflow.".format(workflow_name))
+            errors += 1
+            continue
+
+        parameters = info['parameters']
+        result, message = adaptation.patch_workflow(workflow_name, **parameters)
+        if result:
+            success += 1
+        else:
+            logger.error("The patch has not been applied. {}".format(message))
+            errors += 1
+
+    logger.info(
+        "Workflow adaptations applied from registry with {} success and {} "
+        "errors".format(success, errors))
+    return success, errors
