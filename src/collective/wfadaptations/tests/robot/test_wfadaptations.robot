@@ -67,9 +67,6 @@ Scenario: Warning message if there is now workflow adaptations
 
 # --- Given ------------------------------------------------------------------
 
-a manager
-  Log in as site owner
-
 
 # --- WHEN / AND --------------------------------------------------------------
 
