@@ -51,6 +51,17 @@ Scenario: Invalid workflow adaptation parameters lead to failure message
    And I enter invalid parameters
    Then I see failure message
 
+Scenario: New adaptation is added to adaptations list
+  Given a logged in manager
+   When I associate a workflow adaptation
+   And I enter valid parameters
+   Then I see the new adaptation in list
+
+Scenario: Warning message if there is now workflow adaptations
+  Given a logged in manager
+   When I go to manage adaptations page
+   Then I see a warning message
+
 
 *** Keywords *****************************************************************
 
@@ -62,8 +73,12 @@ a manager
 
 # --- WHEN / AND --------------------------------------------------------------
 
+I go to manage adaptations page
+  Go to  ${PLONE_URL}/@@manage_workflow_adaptations
+
 I associate a workflow adaptation
-  Go to  ${PLONE_URL}/@@associate_workflow_adaptation
+  I go to manage adaptations page
+  Select from list  form.widgets.adaptation:list  collective.wfadaptations.example
   Select from list  form.widgets.workflow:list  intranet_workflow
   Click Button  Next
 
@@ -93,3 +108,16 @@ I see success message
 I see failure message
   Wait until page contains  Site Map
   Page should contain  The workflow adaptation has not been successfully applied.
+
+I see the new adaptation in list
+  Wait until page contains  Site Map
+  Page should contain element  applied-adaptations
+  Page should contain  intranet_workflow
+  Page should contain  intranet_workflow
+  Page should contain  internal
+  Page should contain  New title
+
+I see a warning message
+  Wait until page contains  Site Map
+  Page should not contain  applied-adaptations
+  Page should contain  There is no applied workflow adaptations for now

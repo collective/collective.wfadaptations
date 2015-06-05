@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Views to associate workflow adaptations to workflows."""
+"""Views to manage workflow adaptations."""
 from zope import schema
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.i18nmessageid import MessageFactory
 
+from Products.Five import BrowserView
+from plone import api
+from plone.z3cform.layout import FormWrapper
 from z3c.form import button
 from z3c.form.interfaces import HIDDEN_MODE
 from z3c.form.form import Form
 from z3c.form.field import Fields
-from plone import api
-from plone.z3cform.layout import FormWrapper
 
 from collective.wfadaptations import _
 from collective.wfadaptations.api import add_applied_adaptation
+from collective.wfadaptations.api import get_applied_adaptations
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
 
@@ -116,7 +118,8 @@ class ParametersForm(Form):
 
         api.portal.show_message(message, self.request, message_type)
         portal_url = api.portal.get().absolute_url()
-        self.request.response.redirect(portal_url)
+        self.request.response.redirect(
+            "{}/@@manage_workflow_adaptations".format(portal_url))
 
     @button.buttonAndHandler(PMF('label_cancel', default=u'Cancel'),
                              name='cancel')
@@ -124,7 +127,7 @@ class ParametersForm(Form):
         """Cancel."""
         portal_url = api.portal.get().absolute_url()
         self.request.response.redirect(
-            "{}/@@associate_workflow_adaptation".format(portal_url))
+            "{}/@@manage_workflow_adaptations".format(portal_url))
 
     def updateActions(self):
         super(ParametersForm, self).updateActions()
@@ -146,3 +149,12 @@ class AssociateWorkflowAdaptation(FormWrapper):
             self.form = ParametersForm
 
         super(AssociateWorkflowAdaptation, self).__init__(context, request)
+
+
+class ListWorkflowAdaptations(BrowserView):
+
+    """View that lists applied workflow adaptations."""
+
+    def adaptations(self):
+        """Return applied adaptations."""
+        return get_applied_adaptations()
