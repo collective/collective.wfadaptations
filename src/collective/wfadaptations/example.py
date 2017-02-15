@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """Example."""
 from zope import schema
-from zope.interface import implements
 from zope.interface import Interface
 
 from plone import api
 
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from collective.wfadaptations.wfadaptation import WorkflowAdaptationBase
 
 
 class IExampleParameters(Interface):
@@ -20,11 +19,9 @@ class IExampleParameters(Interface):
         required=True)
 
 
-class ExampleWorkflowAdaptation(object):
+class ExampleWorkflowAdaptation(WorkflowAdaptationBase):
 
     """Example workflow adaptation that change a state title."""
-
-    implements(IWorkflowAdaptation)
 
     schema = IExampleParameters
 
@@ -33,10 +30,9 @@ class ExampleWorkflowAdaptation(object):
         wtool = api.portal.get_tool('portal_workflow')
         workflow = wtool[workflow_name]
         state_name = parameters['state_name']
-        if state_name not in workflow.states:
-            message = "The workflow '{}' has no state '{}'.".format(
-                workflow_name, state_name)
-            return False, message
+        msg = self.check_state_in_workflow(workflow, state_name)
+        if msg:
+            return False, msg
 
         state = workflow.states[state_name]
         new_title = parameters['new_state_title']
