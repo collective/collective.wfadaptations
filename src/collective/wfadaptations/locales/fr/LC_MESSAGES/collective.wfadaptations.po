@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.wfadaptations\n"
-"POT-Creation-Date: 2017-02-15 14:03+0000\n"
+"POT-Creation-Date: 2017-02-15 14:42+0000\n"
 "PO-Revision-Date: 2015-06-03 16:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,9 +53,13 @@ msgstr "L'adaptation de workflow a été appliquée avec succès."
 msgid "The workflow adaptation has not been successfully applied."
 msgstr "L'adaptation de workflow n'a pas pu être appliquée."
 
-#: ../wfadaptation.py:21
+#: ../wfadaptation.py:18
 msgid "The workflow id '${id}' (${title}) doesn't contain the state '${state}'."
 msgstr "Le workflow '${id}' (${title}) ne contient pas l'état '${state}'."
+
+#: ../wfadaptation.py:27
+msgid "The workflow id '${id}' (${title}) doesn't contain the transition '${transition}'."
+msgstr "Le workflow '${id}' (${title}) ne contient pas la transition '${transition}'."
 
 #: ../browser/templates/list_workflow_adaptations.pt:8
 msgid "There is no applied workflow adaptations for now."
