@@ -86,7 +86,8 @@ class ParametersForm(Form):
             fields[field_name].mode = HIDDEN_MODE
 
         adaptation = getUtility(IWorkflowAdaptation, self.adaptation_name)
-        fields += Fields(adaptation.schema)
+        if adaptation.schema:
+            fields += Fields(adaptation.schema)
         return fields
 
     @button.buttonAndHandler(PMF(u'Save'), name='save')

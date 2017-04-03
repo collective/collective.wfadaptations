@@ -10,7 +10,7 @@ class WorkflowAdaptationBase(object):
 
     implements(IWorkflowAdaptation)
 
-    schema = None  # must be replaced with empty Schema
+    schema = None
 
     def check_state_in_workflow(self, workflow, state_name):
         """ Check if state_name is a workflow state"""
@@ -29,3 +29,13 @@ class WorkflowAdaptationBase(object):
             return message
         else:
             return ''
+
+    def grant_permission(state, perm, role):
+        '''For a given p_state, this function ensures that p_role is among roles
+           who are granted p_perm.'''
+        # to be improved by giving a list of roles
+        roles = state.permission_roles[perm]
+        if role not in roles:
+            roles = list(roles)
+            roles.append(role)
+            state.setPermission(perm, 0, roles)
