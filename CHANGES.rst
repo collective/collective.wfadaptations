@@ -5,8 +5,8 @@ Changelog
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Set default value to None.
+  [sgeulette]
 
 0.1 (2017-05-31)
 ----------------

@@ -25,7 +25,7 @@ def get_applied_adaptations():
     :returns: The list of applied adaptations
     :rtype: list
     """
-    record = api.portal.get_registry_record(RECORD_NAME)
+    record = api.portal.get_registry_record(RECORD_NAME, default=None)
     if record is None:
         return []
 
