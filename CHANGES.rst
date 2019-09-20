@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.2 (unreleased)
+0.2 (2019-09-20)
 ----------------
 
 - Set default value to None.
