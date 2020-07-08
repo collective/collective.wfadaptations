@@ -5,8 +5,8 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added multiplicity adaptation parameter to authorize an adaptation to be applied multiple times.
+  [sgeulette]
 
 0.2 (2019-09-20)
 ----------------

@@ -35,19 +35,18 @@ def get_applied_adaptations():
              'parameters': json.loads(info['parameters'])} for info in record]
 
 
-def add_applied_adaptation(adaptation_name, workflow_name, **parameters):
+def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **parameters):
     """Add an applied adaptation to registry record.
 
     :param adaptation_name: [required] name of the applied adaptation
     :type adaptation_name: Unicode object
-
-    :param workflow_name: [required] name of the workflow on which the
-    adaptation is applied
+    :param workflow_name: [required] name of the workflow on which the adaptation is applied
     :type workflow_name: Unicode object
+    :param multiplicity: [required] can the same adaptation be applied multiple times
+    :type multiplicity: boolean
     """
     by_workflow = get_applied_adaptations_by_workflows()
-    if (workflow_name in by_workflow and
-            adaptation_name in by_workflow[workflow_name]):
+    if not multiplicity and workflow_name in by_workflow and adaptation_name in by_workflow[workflow_name]:
         raise AdaptationAlreadyAppliedException
 
     serialized_params = json.dumps(parameters, sort_keys=True)

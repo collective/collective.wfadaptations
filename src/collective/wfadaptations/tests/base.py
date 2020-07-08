@@ -18,6 +18,7 @@ class DummyWorkflowAdaptation(object):
     implements(IWorkflowAdaptation)
 
     schema = IDummySchema
+    multiplicity = False
 
     def patch_workflow(self, workflow_name, **parameters):
         self.patched = "{};{}".format(workflow_name, parameters['param'])

@@ -11,6 +11,7 @@ class WorkflowAdaptationBase(object):
     implements(IWorkflowAdaptation)
 
     schema = None
+    multiplicity = False
 
     def check_state_in_workflow(self, workflow, state_name):
         """ Check if state_name is a workflow state"""

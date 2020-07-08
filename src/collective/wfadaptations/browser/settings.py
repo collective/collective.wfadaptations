@@ -108,14 +108,14 @@ class ParametersForm(Form):
         adaptation_name = self.request['form.widgets.adaptation'][0]
 
         # An adaptation can not be applied more than once on a workflow
-        if adaptation_name in already_applied:
+        if adaptation_name in already_applied and not adaptation.multiplicity:
             additional_message = _(
                 "This adaptation is already applied on this workflow.")
         else:
             success, additional_message = adaptation.patch_workflow(
                 workflow_name, **data)
             if success:
-                add_applied_adaptation(adaptation_name, workflow_name, **data)
+                add_applied_adaptation(adaptation_name, workflow_name, adaptation.multiplicity, **data)
                 message_type = 'info'
                 message = _(
                     "The workflow adaptation has been successfully applied.")

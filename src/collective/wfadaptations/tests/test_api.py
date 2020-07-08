@@ -84,7 +84,7 @@ class TestAPI(unittest.TestCase):
 
     def test_add_applied_adaptation(self):
         params = {'param1': 'foo', 'param2': 'bar'}
-        add_applied_adaptation(u'adaptation1', u'workflow2', **params)
+        add_applied_adaptation(u'adaptation1', u'workflow2', False, **params)
         self.assertIn(
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation1',
@@ -93,7 +93,8 @@ class TestAPI(unittest.TestCase):
             api.portal.get_registry_record(RECORD_NAME),
             )
         with self.assertRaises(AdaptationAlreadyAppliedException):
-            add_applied_adaptation(u'adaptation1', u'workflow1', **params)
+            add_applied_adaptation(u'adaptation1', u'workflow1', False, **params)
+        add_applied_adaptation(u'adaptation1', u'workflow1', True, **params)
 
     def test_get_applied_adaptations_by_workflow(self):
         expected = {
