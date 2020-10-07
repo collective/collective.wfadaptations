@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.3 (unreleased)
+1.0 (2020-10-07)
 ----------------
 
 - Added multiplicity adaptation parameter to authorize an adaptation to be applied multiple times.
