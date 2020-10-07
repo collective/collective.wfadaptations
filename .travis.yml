@@ -7,8 +7,10 @@ install:
   - bin/buildout -Nc travis.cfg
 script:
   - bin/test
-  - bin/createcoverage
 after_success:
+  - bin/coverage run bin/test --test=\!"robot"
+  - pip install coverage==4.5.4
+  - python -m coverage.pickle2json
   - pip install coveralls
   - coveralls
 
