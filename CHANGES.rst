@@ -5,8 +5,8 @@ Changelog
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added reapply adaptation parameter to differentiate a reapply after a workflow reset.
+  [sgeulette]
 
 1.0 (2020-10-07)
 ----------------

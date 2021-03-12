@@ -103,9 +103,11 @@ def get_applied_adaptations_for_workflow(workflow_name):
         return all_applied[workflow_name]
 
 
-def apply_from_registry():
+def apply_from_registry(reapply=False):
     """Apply workflow adaptations from registry settings.
 
+    :param reapply: to indicate that the wf adaptations are reapplied after a workflow reset. Default to False.
+    :type reapply: boolean
     :returns: The number of success and errors that occured during the process.
     :rtype: (int, int)
     """
@@ -116,6 +118,7 @@ def apply_from_registry():
         adaptation_name = info['adaptation']
         try:
             adaptation = getUtility(IWorkflowAdaptation, adaptation_name)
+            adaptation.reapply = reapply
         except ComponentLookupError:
             logger.error(
                 "The adaptation '{}' has not been found.".format(

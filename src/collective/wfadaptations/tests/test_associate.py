@@ -54,7 +54,7 @@ class TestParametersForm(unittest.TestCase, BaseTest):
 
         # test that the patch has been applied
         self.assertEqual(
-            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar')
+            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
 
         # test that the record has been updated
         self.assertIn(

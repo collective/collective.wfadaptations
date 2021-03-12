@@ -31,15 +31,15 @@ class TestAPI(unittest.TestCase):
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation1',
              u'parameters': u'{}'
-            },
+             },
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation2',
              u'parameters': u'{}'
-            },
+             },
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation2',
              u'parameters': u'{"param": "foobar"}'
-            },
+             },
         ]
         api.portal.set_registry_record(
             RECORD_NAME, applied_adaptations)
@@ -62,25 +62,25 @@ class TestAPI(unittest.TestCase):
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation1',
              u'parameters': {}
-            },
+             },
             applied_adaptations,
-            )
+        )
 
         self.assertIn(
             {u'workflow': u'workflow1',
              u'adaptation': u'adaptation2',
              u'parameters': {}
-            },
+             },
             applied_adaptations,
-            )
+        )
 
         self.assertIn(
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation2',
              u'parameters': {u"param": u"foobar"}
-            },
+             },
             applied_adaptations,
-            )
+        )
 
     def test_add_applied_adaptation(self):
         params = {'param1': 'foo', 'param2': 'bar'}
@@ -89,9 +89,9 @@ class TestAPI(unittest.TestCase):
             {u'workflow': u'workflow2',
              u'adaptation': u'adaptation1',
              u'parameters': u'{"param1": "foo", "param2": "bar"}'
-            },
+             },
             api.portal.get_registry_record(RECORD_NAME),
-            )
+        )
         with self.assertRaises(AdaptationAlreadyAppliedException):
             add_applied_adaptation(u'adaptation1', u'workflow1', False, **params)
         add_applied_adaptation(u'adaptation1', u'workflow1', True, **params)
@@ -100,7 +100,7 @@ class TestAPI(unittest.TestCase):
         expected = {
             u'workflow1': [u'adaptation1', u'adaptation2'],
             u'workflow2': [u'adaptation2']
-            }
+        }
         self.assertEqual(expected, get_applied_adaptations_by_workflows())
 
     def test_get_applied_adaptations_for_workflow(self):
@@ -123,10 +123,16 @@ class TestAPI(unittest.TestCase):
             [{u'adaptation': u'dummy_adaptation',
               u'workflow': u'intranet_workflow',
               u'parameters': u'{"param": "foobar"}'
-             }])
+              }])
         success, errors = apply_from_registry()
         self.assertEqual(success, 1)
         self.assertEqual(errors, 0)
         # test that the patch has been applied
         self.assertEqual(
-            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar')
+            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
+        success, errors = apply_from_registry(reapply=True)
+        self.assertEqual(success, 1)
+        self.assertEqual(errors, 0)
+        # test that the patch has been applied
+        self.assertEqual(
+            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;True')
