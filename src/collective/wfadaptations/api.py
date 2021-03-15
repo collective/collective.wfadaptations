@@ -30,9 +30,9 @@ def get_applied_adaptations():
         return []
 
     # deserialize parameters
-    return [{'workflow': info['workflow'],
-             'adaptation': info['adaptation'],
-             'parameters': json.loads(info['parameters'])} for info in record]
+    return [{u'workflow': info['workflow'],
+             u'adaptation': info['adaptation'],
+             u'parameters': json.loads(info['parameters'])} for info in record]
 
 
 def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **parameters):

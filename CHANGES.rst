@@ -7,6 +7,8 @@ Changelog
 
 - Added reapply adaptation parameter to differentiate a reapply after a workflow reset.
   [sgeulette]
+- Kept keys as unicode in `get_applied_adaptations`
+  [sgeulette]
 
 1.0 (2020-10-07)
 ----------------
