@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.1 (unreleased)
+1.1 (2021-04-20)
 ----------------
 
 - Added reapply adaptation parameter to differentiate a reapply after a workflow reset.
