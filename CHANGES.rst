@@ -5,8 +5,8 @@ Changelog
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added `name` parameter on `apply_from_registry` to apply given adaptation.
+  [sgeulette]
 
 1.1 (2021-04-20)
 ----------------

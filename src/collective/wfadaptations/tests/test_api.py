@@ -124,15 +124,20 @@ class TestAPI(unittest.TestCase):
               u'workflow': u'intranet_workflow',
               u'parameters': u'{"param": "foobar"}'
               }])
+        self.dummy_wf_adaptation.patched = ''
         success, errors = apply_from_registry()
         self.assertEqual(success, 1)
         self.assertEqual(errors, 0)
-        # test that the patch has been applied
-        self.assertEqual(
-            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
+        self.assertEqual(self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
+        # reapply
+        self.dummy_wf_adaptation.patched = ''
         success, errors = apply_from_registry(reapply=True)
         self.assertEqual(success, 1)
         self.assertEqual(errors, 0)
-        # test that the patch has been applied
-        self.assertEqual(
-            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;True')
+        self.assertEqual(self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;True')
+        # reapply another adaptation only
+        self.dummy_wf_adaptation.patched = ''
+        success, errors = apply_from_registry(reapply=True, name=u'other_adaptation')
+        self.assertEqual(success, 0)
+        self.assertEqual(errors, 0)
+        self.assertEqual(self.dummy_wf_adaptation.patched, '')

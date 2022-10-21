@@ -103,11 +103,11 @@ def get_applied_adaptations_for_workflow(workflow_name):
         return all_applied[workflow_name]
 
 
-def apply_from_registry(reapply=False):
+def apply_from_registry(reapply=False, name=None):
     """Apply workflow adaptations from registry settings.
 
     :param reapply: to indicate that the wf adaptations are reapplied after a workflow reset. Default to False.
-    :type reapply: boolean
+    :param name: if given, only the same adaptation name string is reapplied
     :returns: The number of success and errors that occured during the process.
     :rtype: (int, int)
     """
@@ -116,6 +116,8 @@ def apply_from_registry(reapply=False):
     logger.info("Apply workflow adaptations from registry.")
     for info in get_applied_adaptations():
         adaptation_name = info['adaptation']
+        if name is not None and adaptation_name != name:
+            continue
         try:
             adaptation = getUtility(IWorkflowAdaptation, adaptation_name)
             adaptation.reapply = reapply
