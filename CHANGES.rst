@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.2 (unreleased)
+1.2 (2022-10-28)
 ----------------
 
 - Added `name` parameter on `apply_from_registry` to apply given adaptation.
