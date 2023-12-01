@@ -4,7 +4,7 @@ from collective.wfadaptations.api import get_applied_adaptations
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_FUNCTIONAL_TESTING  # noqa
 from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
-from ecreall.helpers.testing.base import BaseTest
+from plone.app.testing import login
 from plone.app.testing.interfaces import TEST_USER_NAME
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
@@ -12,7 +12,7 @@ from zope.component import getUtility
 import unittest
 
 
-class TestParametersForm(unittest.TestCase, BaseTest):
+class TestParametersForm(unittest.TestCase):
 
     """Test workflow adaptation utility."""
 
@@ -43,7 +43,7 @@ class TestParametersForm(unittest.TestCase, BaseTest):
         view.form.handleApply(form, None)
 
     def test_parameters_form(self):
-        self.login(TEST_USER_NAME)
+        login(self.portal, TEST_USER_NAME)
         request = self.portal.REQUEST
         request.form['form.widgets.workflow'] = ['intranet_workflow']
         request.form['form.widgets.adaptation'] = ['dummy_adaptation']
