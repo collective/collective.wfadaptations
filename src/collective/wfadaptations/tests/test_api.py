@@ -13,7 +13,7 @@ from plone import api
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 
-import unittest2 as unittest
+import unittest
 
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'

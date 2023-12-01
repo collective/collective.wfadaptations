@@ -6,7 +6,7 @@ from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 
-import unittest2 as unittest
+import unittest
 
 
 class TestUtility(unittest.TestCase):

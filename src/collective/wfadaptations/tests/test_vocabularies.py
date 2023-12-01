@@ -9,7 +9,8 @@ from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-import unittest2 as unittest
+import six
+import unittest
 
 
 class TestVocabularies(unittest.TestCase):
@@ -29,7 +30,7 @@ class TestVocabularies(unittest.TestCase):
             'my_other_wf_adaptation': my_other_wf_adaptation,
             'another_wf_adaptation': another_wf_adaptation,
         }
-        for name, adaptation in self.utilities.iteritems():
+        for name, adaptation in six.iteritems(self.utilities):
             gsm.registerUtility(adaptation, IWorkflowAdaptation, name)
 
     def tearDown(self):

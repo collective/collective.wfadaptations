@@ -3,10 +3,11 @@
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from plone import api
 from zope.component import getUtility
-from zope.component.interfaces import ComponentLookupError
+from zope.interface.interfaces import ComponentLookupError
 
 import json
 import logging
+import six
 
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
@@ -49,9 +50,9 @@ def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **param
 
     serialized_params = json.dumps(parameters, sort_keys=True)
     value = {
-        u'workflow': unicode(workflow_name),
-        u'adaptation': unicode(adaptation_name),
-        u'parameters': unicode(serialized_params),
+        u'workflow': six.text_type(workflow_name),
+        u'adaptation': six.text_type(adaptation_name),
+        u'parameters': six.text_type(serialized_params),
         }
 
     record = api.portal.get_registry_record(RECORD_NAME)

@@ -9,7 +9,7 @@ from plone.app.testing.interfaces import TEST_USER_NAME
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 
-import unittest2 as unittest
+import unittest
 
 
 class TestParametersForm(unittest.TestCase, BaseTest):
