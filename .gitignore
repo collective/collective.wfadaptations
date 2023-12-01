@@ -3,12 +3,16 @@
 *.pyc
 .installed.cfg
 .mr.developer.cfg
+.plone-version
+.plone.version*
 .project
 .pydevproject
 .settings/
 bin/
 buildout-cache/
 develop-eggs/
+include/
+lib/
 parts/
 src/*
 !src/collective
