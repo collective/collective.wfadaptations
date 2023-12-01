@@ -6,6 +6,4 @@
   <include file="configure.zcml" />
   <include file="example.zcml" />
 
-  <include package="ecreall.helpers.testing" />
-
 </configure>

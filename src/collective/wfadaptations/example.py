@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """Example."""
+from collective.wfadaptations.wfadaptation import WorkflowAdaptationBase
+from plone import api
 from zope import schema
 from zope.interface import Interface
-
-from plone import api
-
-from collective.wfadaptations.wfadaptation import WorkflowAdaptationBase
 
 
 class IExampleParameters(Interface):

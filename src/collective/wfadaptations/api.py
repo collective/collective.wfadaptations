@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """API for workflow adaptations."""
-import json
-import logging
-
-from zope.component.interfaces import ComponentLookupError
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from plone import api
 from zope.component import getUtility
 
-from plone import api
+import json
+import logging
+import six
 
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
+try:
+    from zope.component.interfaces import ComponentLookupError
+except ImportError:
+    from zope.interface.interfaces import ComponentLookupError
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
 logger = logging.getLogger('collective.wfadaptations')
@@ -51,9 +54,9 @@ def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **param
 
     serialized_params = json.dumps(parameters, sort_keys=True)
     value = {
-        u'workflow': unicode(workflow_name),
-        u'adaptation': unicode(adaptation_name),
-        u'parameters': unicode(serialized_params),
+        u'workflow': six.text_type(workflow_name),
+        u'adaptation': six.text_type(adaptation_name),
+        u'parameters': six.text_type(serialized_params),
         }
 
     record = api.portal.get_registry_record(RECORD_NAME)

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """Test vocabularies."""
-from zope.component import getGlobalSiteManager, getUtility
-from zope.schema.interfaces import IVocabularyFactory
-
-from plone import api
-
-import unittest2 as unittest
-
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
-from collective.wfadaptations.tests.base import DummyWorkflowAdaptation, \
-    AnotherWorkflowAdaptation
+from collective.wfadaptations.tests.base import AnotherWorkflowAdaptation
+from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
+from plone import api
+from zope.component import getGlobalSiteManager
+from zope.component import getUtility
+from zope.schema.interfaces import IVocabularyFactory
+
+import six
+import unittest
 
 
 class TestVocabularies(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestVocabularies(unittest.TestCase):
             'my_other_wf_adaptation': my_other_wf_adaptation,
             'another_wf_adaptation': another_wf_adaptation,
         }
-        for name, adaptation in self.utilities.iteritems():
+        for name, adaptation in six.iteritems(self.utilities):
             gsm.registerUtility(adaptation, IWorkflowAdaptation, name)
 
     def tearDown(self):

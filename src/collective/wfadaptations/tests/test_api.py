@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 """Test api."""
-import unittest2 as unittest
-
-from zope.component import getGlobalSiteManager, getUtility
-
-from plone import api
-
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
-from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
-from collective.wfadaptations.api import get_applied_adaptations
+from collective.wfadaptations.api import AdaptationAlreadyAppliedException
 from collective.wfadaptations.api import add_applied_adaptation
+from collective.wfadaptations.api import apply_from_registry
+from collective.wfadaptations.api import get_applied_adaptations
 from collective.wfadaptations.api import get_applied_adaptations_by_workflows
 from collective.wfadaptations.api import get_applied_adaptations_for_workflow
-from collective.wfadaptations.api import apply_from_registry
-from collective.wfadaptations.api import AdaptationAlreadyAppliedException
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
+from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
+from plone import api
+from zope.component import getGlobalSiteManager
+from zope.component import getUtility
+
+import unittest
 
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'

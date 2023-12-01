@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Setup/installation tests for this package."""
+from collective.wfadaptations import PLONE_VERSION
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
 from plone import api
 
-import unittest2 as unittest
+import unittest
 
 
 class TestInstall(unittest.TestCase):
@@ -14,16 +15,25 @@ class TestInstall(unittest.TestCase):
     def setUp(self):
         """Custom shared utility setup for tests."""
         self.portal = self.layer['portal']
-        self.installer = api.portal.get_tool('portal_quickinstaller')
+        if PLONE_VERSION >= '5.1':
+            from Products.CMFPlone.utils import get_installer  # noqa
+            self.installer = get_installer(self.portal, self.layer["request"])
+            self.ipi = self.installer.is_product_installed
+        else:
+            self.installer = api.portal.get_tool('portal_quickinstaller')  # noqa
+            self.ipi = self.installer.isProductInstalled
 
     def test_product_installed(self):
-        """Test if collective.wfadaptations is installed with portal_quickinstaller."""
-        self.assertTrue(self.installer.isProductInstalled('collective.wfadaptations'))
+        """Test if collective.wfadaptations is installed."""
+        self.assertTrue(self.ipi('collective.wfadaptations'))
 
     def test_uninstall(self):
         """Test if collective.wfadaptations is cleanly uninstalled."""
-        self.installer.uninstallProducts(['collective.wfadaptations'])
-        self.assertFalse(self.installer.isProductInstalled('collective.wfadaptations'))
+        if PLONE_VERSION >= '5.1':
+            self.installer.uninstall_product('collective.wfadaptations')
+        else:
+            self.installer.uninstallProducts(['collective.wfadaptations'])
+        self.assertFalse(self.ipi('collective.wfadaptations'))
 
     # browserlayer.xml
     def test_browserlayer(self):

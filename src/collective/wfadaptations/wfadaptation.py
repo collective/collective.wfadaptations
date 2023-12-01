@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-
-from zope.interface import implements
+from collective.wfadaptations import _
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from zope.interface import implementer
 
-from . import _
 
-
+@implementer(IWorkflowAdaptation)
 class WorkflowAdaptationBase(object):
-
-    implements(IWorkflowAdaptation)
 
     schema = None
     multiplicity = False
@@ -33,8 +30,8 @@ class WorkflowAdaptationBase(object):
             return ''
 
     def grant_permission(state, perm, role):
-        '''For a given p_state, this function ensures that p_role is among roles
-           who are granted p_perm.'''
+        """For a given p_state, this function ensures that p_role is among roles
+           who are granted p_perm."""
         # to be improved by giving a list of roles
         roles = state.permission_roles[perm]
         if role not in roles:
