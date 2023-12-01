@@ -3,12 +3,16 @@
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from plone import api
 from zope.component import getUtility
-from zope.interface.interfaces import ComponentLookupError
 
 import json
 import logging
 import six
 
+
+try:
+    from zope.component.interfaces import ComponentLookupError
+except ImportError:
+    from zope.interface.interfaces import ComponentLookupError
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
 logger = logging.getLogger('collective.wfadaptations')
