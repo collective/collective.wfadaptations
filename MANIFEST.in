@@ -1,8 +1,7 @@
 graft src/collective
 graft docs
-include *.cfg *.rst *.in
+include *.rst *.in
 recursive-include docs *.GPL
 recursive-include docs *.rst
 global-exclude *.pyc *.sh *.pot
-exclude Makefile *.cfg .coveragerc .travis.yml bootstrap.py .editorconfig
-prune buildout.d
+exclude Makefile *.cfg *.txt .coveragerc .editorconfig
