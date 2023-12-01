@@ -24,6 +24,7 @@ setup(
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: Addon",
@@ -36,9 +37,9 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
     keywords='Plone Python',
-    author='Cédric Messiant',
+    author='Cedric Messiant',
     author_email='cedricmessiant@ecreall.com',
-#    url='https://pypi.python.org/pypi/collective.wfadaptations',
+    # url='https://pypi.python.org/pypi/collective.wfadaptations',
     project_urls={
         "PyPI": "https://pypi.python.org/pypi/collective.wfadaptations",
         "Source": "https://github.com/collective/collective.wfadaptations",
