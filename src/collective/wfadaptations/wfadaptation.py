@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from zope.interface import implements
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
-
 from . import _
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from zope.interface import implements
 
 
 class WorkflowAdaptationBase(object):

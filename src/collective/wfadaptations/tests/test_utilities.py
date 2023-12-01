@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Test utility."""
-import unittest2 as unittest
-
-from zope.component import getGlobalSiteManager, getUtility
-
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
-from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING  # noqa
+from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
+from zope.component import getGlobalSiteManager
+from zope.component import getUtility
+
+import unittest2 as unittest
 
 
 class TestUtility(unittest.TestCase):

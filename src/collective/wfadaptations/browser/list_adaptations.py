@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """List workflow adaptations."""
-from Products.Five import BrowserView
-
 from collective.wfadaptations.api import get_applied_adaptations
+from Products.Five import BrowserView
 
 
 class ListWorkflowAdaptations(BrowserView):

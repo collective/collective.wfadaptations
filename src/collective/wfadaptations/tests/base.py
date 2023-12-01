@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from zope import schema
-from zope.interface import Interface
-from zope.interface import implements
-
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from zope import schema
+from zope.interface import implements
+from zope.interface import Interface
 
 
 class IDummySchema(Interface):

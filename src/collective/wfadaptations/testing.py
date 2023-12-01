@@ -2,10 +2,10 @@
 """Base module for unittesting."""
 
 from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
-from plone.app.testing import setRoles
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneWithPackageLayer
+from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.testing import z2
 

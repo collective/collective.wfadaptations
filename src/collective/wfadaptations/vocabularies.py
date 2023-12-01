@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """Vocabularies."""
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
 from zope.component import getUtilitiesFor
 from zope.schema.vocabulary import SimpleVocabulary
-
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
 
 class WorkflowAdaptationsVocabulary(object):

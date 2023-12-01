@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 """Test associate views."""
-import unittest2 as unittest
-
-from zope.component import getGlobalSiteManager, getUtility
-
-from plone.app.testing.interfaces import TEST_USER_NAME
-
-from ecreall.helpers.testing.base import BaseTest
-
 from collective.wfadaptations.api import get_applied_adaptations
 from collective.wfadaptations.interfaces import IWorkflowAdaptation
-from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
 from collective.wfadaptations.testing import COLLECTIVE_WFADAPTATIONS_FUNCTIONAL_TESTING  # noqa
+from collective.wfadaptations.tests.base import DummyWorkflowAdaptation
+from ecreall.helpers.testing.base import BaseTest
+from plone.app.testing.interfaces import TEST_USER_NAME
+from zope.component import getGlobalSiteManager
+from zope.component import getUtility
+
+import unittest2 as unittest
 
 
 class TestParametersForm(unittest.TestCase, BaseTest):

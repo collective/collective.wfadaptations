@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """API for workflow adaptations."""
+from collective.wfadaptations.interfaces import IWorkflowAdaptation
+from plone import api
+from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
+
 import json
 import logging
-
-from zope.component.interfaces import ComponentLookupError
-from zope.component import getUtility
-
-from plone import api
-
-from collective.wfadaptations.interfaces import IWorkflowAdaptation
 
 
 RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
