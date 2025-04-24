@@ -5,7 +5,8 @@ Changelog
 2.0.0a1 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Added Plone 6.1 version in buildout.
+  [chris-adam]
 
 
 2.0.0a0 (2023-12-01)

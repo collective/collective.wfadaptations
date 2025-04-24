@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -19,13 +19,15 @@ jobs:
             plone: 4.3
 #          - python: 3.7.14
 #            plone: 5.2
-#          - python: 3.10.11
-#            plone: "6.0"
+          - python: 3.10.11
+            plone: "6.0"
+          - python: 3.13.3
+            plone: "6.1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up pyenv and Python
-        uses: "gabrielfalcao/pyenv-action@v14"
+        uses: "gabrielfalcao/pyenv-action@v18"
         with:
           default: "${{ matrix.python }}"
       - name: Setup Env
@@ -33,20 +35,12 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements-${{ matrix.plone }}.txt
       - name: Cache eggs
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-eggs
         with:
           path: ~/buildout-cache/eggs
           key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ matrix.python }}-${{ matrix.plone }}
-#      - name: Cache eggs restore
-#        id: cache-restore
-#        uses: actions/cache/restore@v3
-#        env:
-#          cache-name: cache-eggs
-#        with:
-#          path: ~/buildout-cache/eggs
-#          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ matrix.python }}-${{ matrix.plone }}
       - name: buildout
         run: |
           sed -ie "s#test.cfg#test-${{matrix.plone}}.cfg#" gha.cfg
@@ -61,18 +55,20 @@ jobs:
         run: |
           bin/test -t !robot
   coverage:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         include:
           - python: 3.10.11
             plone: "6.0"
+          - python: 3.13.3
+            plone: "6.1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up pyenv and Python
-        uses: "gabrielfalcao/pyenv-action@v14"
+        uses: "gabrielfalcao/pyenv-action@v18"
         with:
           default: "${{ matrix.python }}"
       - name: Setup Env
@@ -81,7 +77,7 @@ jobs:
           pip install -r requirements-${{matrix.plone}}.txt
           pip install -U coveralls coverage
       - name: Cache eggs
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-eggs
         with:
