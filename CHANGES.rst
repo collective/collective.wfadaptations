@@ -5,7 +5,10 @@ Changelog
 2.0.0a1 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Added Plone 6.1 support.
+  [chris-adam]
+- Added uninstall profile.
+  [chris-adam]
 
 
 2.0.0a0 (2023-12-01)
