@@ -26,14 +26,13 @@ class IAssociateWorkflowAdaptation(model.Schema):
     """View to associate workflow adaptations to workflows."""
 
     workflow = schema.Choice(
-        title=_(u'Workflow'),
-        vocabulary="plone.app.vocabularies.Workflows"
+        title=_(u"Workflow"), vocabulary="plone.app.vocabularies.Workflows"
     )
 
     adaptation = schema.Choice(
-        title=_(u'Workflow adaptation'),
-        description=_(u'Workflow adaptation to execute on this workflow'),
-        vocabulary="collective.wfadaptations.WorkflowAdaptations"
+        title=_(u"Workflow adaptation"),
+        description=_(u"Workflow adaptation to execute on this workflow"),
+        vocabulary="collective.wfadaptations.WorkflowAdaptations",
     )
 
 
@@ -45,23 +44,22 @@ class AssociateWorkflowAdaptationForm(Form):
     fields = Fields(IAssociateWorkflowAdaptation)
     ignoreContext = True
 
-    @button.buttonAndHandler(PMF(u'Next'), name='next')
+    @button.buttonAndHandler(PMF(u"Next"), name="next")
     def handleNext(self, action):
         """Handle add action."""
         pass  # we never come here
 
-    @button.buttonAndHandler(PMF('label_cancel', default=u'Cancel'),
-                             name='cancel')
+    @button.buttonAndHandler(PMF("label_cancel", default=u"Cancel"), name="cancel")
     def handleCancel(self, action):
         """Cancel."""
         super(AssociateWorkflowAdaptationForm, self).handleCancel(action)
 
     def updateActions(self):
         super(AssociateWorkflowAdaptationForm, self).updateActions()
-        if 'send' in self.actions:
+        if "send" in self.actions:
             self.actions["next"].addClass("context")
 
-        if 'cancel' in self.actions:
+        if "cancel" in self.actions:
             self.actions["cancel"].addClass("standalone")
 
 
@@ -74,8 +72,8 @@ class ParametersForm(Form):
 
     def __init__(self, context, request):
         super(ParametersForm, self).__init__(context, request)
-        self.workflow = request.get('form.widgets.workflow')[0]
-        self.adaptation_name = request.get('form.widgets.adaptation')[0]
+        self.workflow = request.get("form.widgets.workflow")[0]
+        self.adaptation_name = request.get("form.widgets.adaptation")[0]
 
     @property
     def fields(self):
@@ -88,7 +86,7 @@ class ParametersForm(Form):
             fields += Fields(adaptation.schema)
         return fields
 
-    @button.buttonAndHandler(PMF(u'Save'), name='save')
+    @button.buttonAndHandler(PMF(u"Save"), name="save")
     def handleApply(self, action):
         """Apply the workflow adaptation."""
         data, errors = self.extractData()
@@ -96,52 +94,56 @@ class ParametersForm(Form):
             self.status = self.formErrorsMessage
             return
 
-        adaptation = data.pop('adaptation')
-        workflow_name = data.pop('workflow')
+        adaptation = data.pop("adaptation")
+        workflow_name = data.pop("workflow")
 
-        message_type = 'error'
-        message = _(
-            "The workflow adaptation has not been successfully applied.")
+        message_type = "error"
+        message = _("The workflow adaptation has not been successfully applied.")
         already_applied = get_applied_adaptations_for_workflow(workflow_name)
-        adaptation_name = self.request['form.widgets.adaptation'][0]
+        adaptation_name = self.request["form.widgets.adaptation"][0]
 
         # An adaptation can not be applied more than once on a workflow
         if adaptation_name in already_applied and not adaptation.multiplicity:
             additional_message = _(
-                "This adaptation is already applied on this workflow.")
+                "This adaptation is already applied on this workflow."
+            )
         else:
             success, additional_message = adaptation.patch_workflow(
-                workflow_name, **data)
+                workflow_name, **data
+            )
             if success:
-                add_applied_adaptation(adaptation_name, workflow_name, adaptation.multiplicity, **data)
-                message_type = 'info'
-                message = _(
-                    "The workflow adaptation has been successfully applied.")
+                add_applied_adaptation(
+                    adaptation_name, workflow_name, adaptation.multiplicity, **data
+                )
+                message_type = "info"
+                message = _("The workflow adaptation has been successfully applied.")
 
         if additional_message:
-            message = _("${message} ${additional}",
-                        mapping={'message': message,
-                                 'additional': additional_message})
+            message = _(
+                "${message} ${additional}",
+                mapping={"message": message, "additional": additional_message},
+            )
 
         api.portal.show_message(message, self.request, message_type)
         portal_url = api.portal.get().absolute_url()
         self.request.response.redirect(
-            "{}/@@manage_workflow_adaptations".format(portal_url))
+            "{}/@@manage_workflow_adaptations".format(portal_url)
+        )
 
-    @button.buttonAndHandler(PMF('label_cancel', default=u'Cancel'),
-                             name='cancel')
+    @button.buttonAndHandler(PMF("label_cancel", default=u"Cancel"), name="cancel")
     def handleCancel(self, action):
         """Cancel."""
         portal_url = api.portal.get().absolute_url()
         self.request.response.redirect(
-            "{}/@@manage_workflow_adaptations".format(portal_url))
+            "{}/@@manage_workflow_adaptations".format(portal_url)
+        )
 
     def updateActions(self):
         super(ParametersForm, self).updateActions()
-        if 'send' in self.actions:
+        if "send" in self.actions:
             self.actions["save"].addClass("context")
 
-        if 'cancel' in self.actions:
+        if "cancel" in self.actions:
             self.actions["cancel"].addClass("standalone")
 
 
@@ -152,7 +154,7 @@ class AssociateWorkflowAdaptation(FormWrapper):
     def __init__(self, context, request):
         """Determine if we are in step 1 or step 2."""
         params = set(request.keys())
-        if 'form.widgets.adaptation' in params:
+        if "form.widgets.adaptation" in params:
             self.form = ParametersForm
 
         super(AssociateWorkflowAdaptation, self).__init__(context, request)

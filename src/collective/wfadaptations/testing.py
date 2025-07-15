@@ -13,28 +13,27 @@ import collective.wfadaptations
 
 
 class CollectiveWfadaptationsLayer(PloneWithPackageLayer):
-
     def setUpPloneSite(self, portal):
         super(CollectiveWfadaptationsLayer, self).setUpPloneSite(portal)
-        setRoles(portal, TEST_USER_ID, ['Manager'])
+        setRoles(portal, TEST_USER_ID, ["Manager"])
 
 
 COLLECTIVE_WFADAPTATIONS_FIXTURE = CollectiveWfadaptationsLayer(
     zcml_package=collective.wfadaptations,
-    zcml_filename='testing.zcml',
-    gs_profile_id='collective.wfadaptations:default',
-    )
+    zcml_filename="testing.zcml",
+    gs_profile_id="collective.wfadaptations:default",
+)
 
 
 COLLECTIVE_WFADAPTATIONS_INTEGRATION_TESTING = IntegrationTesting(
     bases=(COLLECTIVE_WFADAPTATIONS_FIXTURE,),
-    name='CollectiveWfadaptationsLayer:IntegrationTesting'
+    name="CollectiveWfadaptationsLayer:IntegrationTesting",
 )
 
 
 COLLECTIVE_WFADAPTATIONS_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(COLLECTIVE_WFADAPTATIONS_FIXTURE,),
-    name='CollectiveWfadaptationsLayer:FunctionalTesting'
+    name="CollectiveWfadaptationsLayer:FunctionalTesting",
 )
 
 
@@ -42,7 +41,7 @@ COLLECTIVE_WFADAPTATIONS_ACCEPTANCE_TESTING = FunctionalTesting(
     bases=(
         COLLECTIVE_WFADAPTATIONS_FIXTURE,
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
-        z2.ZSERVER_FIXTURE
+        z2.ZSERVER_FIXTURE,
     ),
-    name='CollectiveWfadaptationsLayer:AcceptanceTesting'
+    name="CollectiveWfadaptationsLayer:AcceptanceTesting",
 )

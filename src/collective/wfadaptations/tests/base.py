@@ -7,9 +7,7 @@ from zope.interface import Interface
 
 class IDummySchema(Interface):
 
-    param = schema.TextLine(
-        title=u"Dummy parameter",
-        required=True)
+    param = schema.TextLine(title=u"Dummy parameter", required=True)
 
 
 @implementer(IWorkflowAdaptation)
@@ -20,8 +18,10 @@ class DummyWorkflowAdaptation(object):
     reapply = False
 
     def patch_workflow(self, workflow_name, **parameters):
-        self.patched = "{};{};{}".format(workflow_name, parameters['param'], self.reapply)  # noqa
-        return True, ''
+        self.patched = "{};{};{}".format(
+            workflow_name, parameters["param"], self.reapply
+        )  # noqa
+        return True, ""
 
 
 @implementer(IWorkflowAdaptation)
@@ -30,4 +30,4 @@ class AnotherWorkflowAdaptation(object):
     schema = None
 
     def patch_workflow(self, workflow_name, **parameters):
-        return True, ''
+        return True, ""

@@ -16,7 +16,7 @@ from zope.component import getUtility
 import unittest
 
 
-RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
+RECORD_NAME = "collective.wfadaptations.applied_adaptations"
 
 
 class TestAPI(unittest.TestCase):
@@ -27,89 +27,90 @@ class TestAPI(unittest.TestCase):
 
     def setUp(self):
         applied_adaptations = [
-            {u'workflow': u'workflow1',
-             u'adaptation': u'adaptation1',
-             u'parameters': u'{}'
-             },
-            {u'workflow': u'workflow1',
-             u'adaptation': u'adaptation2',
-             u'parameters': u'{}'
-             },
-            {u'workflow': u'workflow2',
-             u'adaptation': u'adaptation2',
-             u'parameters': u'{"param": "foobar"}'
-             },
+            {
+                u"workflow": u"workflow1",
+                u"adaptation": u"adaptation1",
+                u"parameters": u"{}",
+            },
+            {
+                u"workflow": u"workflow1",
+                u"adaptation": u"adaptation2",
+                u"parameters": u"{}",
+            },
+            {
+                u"workflow": u"workflow2",
+                u"adaptation": u"adaptation2",
+                u"parameters": u'{"param": "foobar"}',
+            },
         ]
-        api.portal.set_registry_record(
-            RECORD_NAME, applied_adaptations)
+        api.portal.set_registry_record(RECORD_NAME, applied_adaptations)
 
         gsm = getGlobalSiteManager()
         self.dummy_wf_adaptation = DummyWorkflowAdaptation()
         gsm.registerUtility(
-            self.dummy_wf_adaptation,
-            IWorkflowAdaptation,
-            'dummy_adaptation')
+            self.dummy_wf_adaptation, IWorkflowAdaptation, "dummy_adaptation"
+        )
 
     def tearDown(self):
         gsm = getGlobalSiteManager()
-        utility = getUtility(IWorkflowAdaptation, 'dummy_adaptation')
-        gsm.unregisterUtility(utility, IWorkflowAdaptation, 'dummy_adaptation')
+        utility = getUtility(IWorkflowAdaptation, "dummy_adaptation")
+        gsm.unregisterUtility(utility, IWorkflowAdaptation, "dummy_adaptation")
 
     def test_get_applied_adaptations(self):
         applied_adaptations = get_applied_adaptations()
         self.assertIn(
-            {u'workflow': u'workflow1',
-             u'adaptation': u'adaptation1',
-             u'parameters': {}
-             },
+            {
+                u"workflow": u"workflow1",
+                u"adaptation": u"adaptation1",
+                u"parameters": {},
+            },
             applied_adaptations,
         )
 
         self.assertIn(
-            {u'workflow': u'workflow1',
-             u'adaptation': u'adaptation2',
-             u'parameters': {}
-             },
+            {
+                u"workflow": u"workflow1",
+                u"adaptation": u"adaptation2",
+                u"parameters": {},
+            },
             applied_adaptations,
         )
 
         self.assertIn(
-            {u'workflow': u'workflow2',
-             u'adaptation': u'adaptation2',
-             u'parameters': {u"param": u"foobar"}
-             },
+            {
+                u"workflow": u"workflow2",
+                u"adaptation": u"adaptation2",
+                u"parameters": {u"param": u"foobar"},
+            },
             applied_adaptations,
         )
 
     def test_add_applied_adaptation(self):
-        params = {'param1': 'foo', 'param2': 'bar'}
-        add_applied_adaptation(u'adaptation1', u'workflow2', False, **params)
+        params = {"param1": "foo", "param2": "bar"}
+        add_applied_adaptation(u"adaptation1", u"workflow2", False, **params)
         self.assertIn(
-            {u'workflow': u'workflow2',
-             u'adaptation': u'adaptation1',
-             u'parameters': u'{"param1": "foo", "param2": "bar"}'
-             },
+            {
+                u"workflow": u"workflow2",
+                u"adaptation": u"adaptation1",
+                u"parameters": u'{"param1": "foo", "param2": "bar"}',
+            },
             api.portal.get_registry_record(RECORD_NAME),
         )
         with self.assertRaises(AdaptationAlreadyAppliedException):
-            add_applied_adaptation(u'adaptation1', u'workflow1', False, **params)
-        add_applied_adaptation(u'adaptation1', u'workflow1', True, **params)
+            add_applied_adaptation(u"adaptation1", u"workflow1", False, **params)
+        add_applied_adaptation(u"adaptation1", u"workflow1", True, **params)
 
     def test_get_applied_adaptations_by_workflow(self):
         expected = {
-            u'workflow1': [u'adaptation1', u'adaptation2'],
-            u'workflow2': [u'adaptation2']
+            u"workflow1": [u"adaptation1", u"adaptation2"],
+            u"workflow2": [u"adaptation2"],
         }
         self.assertEqual(expected, get_applied_adaptations_by_workflows())
 
     def test_get_applied_adaptations_for_workflow(self):
-        expected = [u'adaptation1', u'adaptation2']
-        self.assertEqual(
-            expected,
-            get_applied_adaptations_for_workflow('workflow1'))
-        self.assertEqual(
-            [],
-            get_applied_adaptations_for_workflow('workflow3'))
+        expected = [u"adaptation1", u"adaptation2"]
+        self.assertEqual(expected, get_applied_adaptations_for_workflow("workflow1"))
+        self.assertEqual([], get_applied_adaptations_for_workflow("workflow3"))
 
     def test_apply_from_registry(self):
         success, errors = apply_from_registry()
@@ -119,24 +120,32 @@ class TestAPI(unittest.TestCase):
         # empty registry, add a real adaptation and try again
         api.portal.set_registry_record(
             RECORD_NAME,
-            [{u'adaptation': u'dummy_adaptation',
-              u'workflow': u'intranet_workflow',
-              u'parameters': u'{"param": "foobar"}'
-              }])
-        self.dummy_wf_adaptation.patched = ''
+            [
+                {
+                    u"adaptation": u"dummy_adaptation",
+                    u"workflow": u"intranet_workflow",
+                    u"parameters": u'{"param": "foobar"}',
+                }
+            ],
+        )
+        self.dummy_wf_adaptation.patched = ""
         success, errors = apply_from_registry()
         self.assertEqual(success, 1)
         self.assertEqual(errors, 0)
-        self.assertEqual(self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
+        self.assertEqual(
+            self.dummy_wf_adaptation.patched, "intranet_workflow;foobar;False"
+        )
         # reapply
-        self.dummy_wf_adaptation.patched = ''
+        self.dummy_wf_adaptation.patched = ""
         success, errors = apply_from_registry(reapply=True)
         self.assertEqual(success, 1)
         self.assertEqual(errors, 0)
-        self.assertEqual(self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;True')
+        self.assertEqual(
+            self.dummy_wf_adaptation.patched, "intranet_workflow;foobar;True"
+        )
         # reapply another adaptation only
-        self.dummy_wf_adaptation.patched = ''
-        success, errors = apply_from_registry(reapply=True, name=u'other_adaptation')
+        self.dummy_wf_adaptation.patched = ""
+        success, errors = apply_from_registry(reapply=True, name=u"other_adaptation")
         self.assertEqual(success, 0)
         self.assertEqual(errors, 0)
-        self.assertEqual(self.dummy_wf_adaptation.patched, '')
+        self.assertEqual(self.dummy_wf_adaptation.patched, "")

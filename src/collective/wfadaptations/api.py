@@ -14,8 +14,8 @@ try:
 except ImportError:
     from zope.interface.interfaces import ComponentLookupError
 
-RECORD_NAME = 'collective.wfadaptations.applied_adaptations'
-logger = logging.getLogger('collective.wfadaptations')
+RECORD_NAME = "collective.wfadaptations.applied_adaptations"
+logger = logging.getLogger("collective.wfadaptations")
 
 
 class AdaptationAlreadyAppliedException(Exception):
@@ -33,9 +33,14 @@ def get_applied_adaptations():
         return []
 
     # deserialize parameters
-    return [{u'workflow': info['workflow'],
-             u'adaptation': info['adaptation'],
-             u'parameters': json.loads(info['parameters'])} for info in record]
+    return [
+        {
+            u"workflow": info["workflow"],
+            u"adaptation": info["adaptation"],
+            u"parameters": json.loads(info["parameters"]),
+        }
+        for info in record
+    ]
 
 
 def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **parameters):
@@ -49,15 +54,19 @@ def add_applied_adaptation(adaptation_name, workflow_name, multiplicity, **param
     :type multiplicity: boolean
     """
     by_workflow = get_applied_adaptations_by_workflows()
-    if not multiplicity and workflow_name in by_workflow and adaptation_name in by_workflow[workflow_name]:
+    if (
+        not multiplicity
+        and workflow_name in by_workflow
+        and adaptation_name in by_workflow[workflow_name]
+    ):
         raise AdaptationAlreadyAppliedException
 
     serialized_params = json.dumps(parameters, sort_keys=True)
     value = {
-        u'workflow': six.text_type(workflow_name),
-        u'adaptation': six.text_type(adaptation_name),
-        u'parameters': six.text_type(serialized_params),
-        }
+        u"workflow": six.text_type(workflow_name),
+        u"adaptation": six.text_type(adaptation_name),
+        u"parameters": six.text_type(serialized_params),
+    }
 
     record = api.portal.get_registry_record(RECORD_NAME)
     if record is None:
@@ -80,8 +89,8 @@ def get_applied_adaptations_by_workflows():
 
     result = {}
     for adaptation in applied_adaptations:
-        workflow = adaptation['workflow']
-        adaptation = adaptation['adaptation']
+        workflow = adaptation["workflow"]
+        adaptation = adaptation["adaptation"]
         if workflow not in result:
             result[workflow] = []
 
@@ -118,7 +127,7 @@ def apply_from_registry(reapply=False, name=None):
     success = 0
     logger.info("Apply workflow adaptations from registry.")
     for info in get_applied_adaptations():
-        adaptation_name = info['adaptation']
+        adaptation_name = info["adaptation"]
         if name is not None and adaptation_name != name:
             continue
         try:
@@ -126,19 +135,19 @@ def apply_from_registry(reapply=False, name=None):
             adaptation.reapply = reapply
         except ComponentLookupError:
             logger.error(
-                "The adaptation '{}' has not been found.".format(
-                    adaptation_name))
+                "The adaptation '{}' has not been found.".format(adaptation_name)
+            )
             errors += 1
             continue
 
-        workflow_name = info['workflow']
-        wtool = api.portal.get_tool('portal_workflow')
+        workflow_name = info["workflow"]
+        wtool = api.portal.get_tool("portal_workflow")
         if workflow_name not in wtool:
             logger.error("There is no '{}' workflow.".format(workflow_name))
             errors += 1
             continue
 
-        parameters = info['parameters']
+        parameters = info["parameters"]
         result, message = adaptation.patch_workflow(workflow_name, **parameters)
         if result:
             success += 1
@@ -148,5 +157,6 @@ def apply_from_registry(reapply=False, name=None):
 
     logger.info(
         "Workflow adaptations applied from registry with {} success and {} "
-        "errors".format(success, errors))
+        "errors".format(success, errors)
+    )
     return success, errors

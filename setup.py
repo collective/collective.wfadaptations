@@ -6,20 +6,19 @@ from setuptools import setup
 
 
 long_description = (
-    open('README.rst').read()
-    + '\n' +
-    'Contributors\n'
-    '============\n'
-    + '\n' +
-    open('CONTRIBUTORS.rst').read()
-    + '\n' +
-    open('CHANGES.rst').read()
-    + '\n')
+    open("README.rst").read() + "\n" + "Contributors\n"
+    "============\n"
+    + "\n"
+    + open("CONTRIBUTORS.rst").read()
+    + "\n"
+    + open("CHANGES.rst").read()
+    + "\n"
+)
 
 
 setup(
-    name='collective.wfadaptations',
-    version='2.0.0a1.dev0',
+    name="collective.wfadaptations",
+    version="2.0.0a1.dev0",
     description="Adaptations for your Plone workflows",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -38,29 +37,29 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
-    keywords='Plone Python',
-    author='Cedric Messiant',
-    author_email='cedricmessiant@ecreall.com',
+    keywords="Plone Python",
+    author="Cedric Messiant",
+    author_email="cedricmessiant@ecreall.com",
     # url='https://pypi.python.org/pypi/collective.wfadaptations',
     project_urls={
         "PyPI": "https://pypi.python.org/pypi/collective.wfadaptations",
         "Source": "https://github.com/collective/collective.wfadaptations",
     },
-    license='GPL',
-    packages=find_packages('src', exclude=['ez_setup']),
-    namespace_packages=['collective'],
-    package_dir={'': 'src'},
+    license="GPL",
+    packages=find_packages("src", exclude=["ez_setup"]),
+    namespace_packages=["collective"],
+    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'plone.api',
-        'setuptools',
+        "plone.api",
+        "setuptools",
     ],
     extras_require={
-        'test': [
-            'plone.app.testing',
-            'plone.app.contenttypes',
-            'plone.app.robotframework[debug]',
+        "test": [
+            "plone.app.testing",
+            "plone.app.contenttypes",
+            "plone.app.robotframework[debug]",
         ],
     },
     entry_points="""

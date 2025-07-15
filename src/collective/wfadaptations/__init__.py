@@ -5,6 +5,6 @@ from plone import api
 from zope.i18nmessageid import MessageFactory
 
 
-_ = MessageFactory('collective.wfadaptations')
+_ = MessageFactory("collective.wfadaptations")
 
 PLONE_VERSION = api.env.plone_version()[:3]

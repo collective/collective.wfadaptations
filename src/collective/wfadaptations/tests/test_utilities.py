@@ -18,10 +18,7 @@ class TestUtility(unittest.TestCase):
     def test_register_utility(self):
         gsm = getGlobalSiteManager()
         my_wf_adaptation = DummyWorkflowAdaptation()
-        gsm.registerUtility(
-            my_wf_adaptation,
-            IWorkflowAdaptation,
-            'my_wf_adaptation')
-        utility = getUtility(IWorkflowAdaptation, 'my_wf_adaptation')
+        gsm.registerUtility(my_wf_adaptation, IWorkflowAdaptation, "my_wf_adaptation")
+        utility = getUtility(IWorkflowAdaptation, "my_wf_adaptation")
         self.assertEqual(my_wf_adaptation, utility)
-        gsm.unregisterUtility(utility, IWorkflowAdaptation, 'my_wf_adaptation')
+        gsm.unregisterUtility(utility, IWorkflowAdaptation, "my_wf_adaptation")

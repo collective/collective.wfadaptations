@@ -11,7 +11,9 @@ class WorkflowAdaptationsVocabulary(object):
 
     def __call__(self, context):
         adaptations = getUtilitiesFor(IWorkflowAdaptation)
-        terms = [SimpleVocabulary.createTerm(klass, name, name)
-                 for name, klass in adaptations]
+        terms = [
+            SimpleVocabulary.createTerm(klass, name, name)
+            for name, klass in adaptations
+        ]
 
         return SimpleVocabulary(terms)

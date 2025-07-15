@@ -20,22 +20,21 @@ class TestParametersForm(unittest.TestCase):
 
     def setUp(self):
         super(TestParametersForm, self).setUp()
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
         gsm = getGlobalSiteManager()
         self.dummy_wf_adaptation = DummyWorkflowAdaptation()
         gsm.registerUtility(
-            self.dummy_wf_adaptation,
-            IWorkflowAdaptation,
-            'dummy_adaptation')
+            self.dummy_wf_adaptation, IWorkflowAdaptation, "dummy_adaptation"
+        )
 
     def tearDown(self):
         gsm = getGlobalSiteManager()
-        utility = getUtility(IWorkflowAdaptation, 'dummy_adaptation')
-        gsm.unregisterUtility(utility, IWorkflowAdaptation, 'dummy_adaptation')
+        utility = getUtility(IWorkflowAdaptation, "dummy_adaptation")
+        gsm.unregisterUtility(utility, IWorkflowAdaptation, "dummy_adaptation")
 
     def simulate_form_submit(self, request):
         """Simulate form submit."""
-        view = self.portal.restrictedTraverse('associate_workflow_adaptation')
+        view = self.portal.restrictedTraverse("associate_workflow_adaptation")
         view.request = request
         view()
         form = view.form(self.portal, request)
@@ -45,20 +44,22 @@ class TestParametersForm(unittest.TestCase):
     def test_parameters_form(self):
         login(self.portal, TEST_USER_NAME)
         request = self.portal.REQUEST
-        request.form['form.widgets.workflow'] = ['intranet_workflow']
-        request.form['form.widgets.adaptation'] = ['dummy_adaptation']
-        request.form['form.widgets.param'] = 'foobar'
+        request.form["form.widgets.workflow"] = ["intranet_workflow"]
+        request.form["form.widgets.adaptation"] = ["dummy_adaptation"]
+        request.form["form.widgets.param"] = "foobar"
         self.simulate_form_submit(request)
 
         # test that the patch has been applied
         self.assertEqual(
-            self.dummy_wf_adaptation.patched, 'intranet_workflow;foobar;False')
+            self.dummy_wf_adaptation.patched, "intranet_workflow;foobar;False"
+        )
 
         # test that the record has been updated
         self.assertIn(
-            {'adaptation': 'dummy_adaptation',
-             'workflow': 'intranet_workflow',
-             'parameters': {"param": "foobar"}
+            {
+                "adaptation": "dummy_adaptation",
+                "workflow": "intranet_workflow",
+                "parameters": {"param": "foobar"},
             },
             get_applied_adaptations(),
-            )
+        )

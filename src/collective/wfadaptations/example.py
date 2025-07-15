@@ -8,13 +8,9 @@ from zope.interface import Interface
 
 class IExampleParameters(Interface):
 
-    state_name = schema.TextLine(
-        title=u"State name",
-        required=True)
+    state_name = schema.TextLine(title=u"State name", required=True)
 
-    new_state_title = schema.TextLine(
-        title=u"New state title",
-        required=True)
+    new_state_title = schema.TextLine(title=u"New state title", required=True)
 
 
 class ExampleWorkflowAdaptation(WorkflowAdaptationBase):
@@ -25,15 +21,15 @@ class ExampleWorkflowAdaptation(WorkflowAdaptationBase):
 
     def patch_workflow(self, workflow_name, **parameters):
         """Change a state title."""
-        wtool = api.portal.get_tool('portal_workflow')
+        wtool = api.portal.get_tool("portal_workflow")
         workflow = wtool[workflow_name]
-        state_name = parameters['state_name']
+        state_name = parameters["state_name"]
         msg = self.check_state_in_workflow(workflow, state_name)
         if msg:
             return False, msg
 
         state = workflow.states[state_name]
-        new_title = parameters['new_state_title']
+        new_title = parameters["new_state_title"]
         if state.title == new_title:
             message = "The state title was already '{}'.".format(new_title)
             return False, message
@@ -41,6 +37,7 @@ class ExampleWorkflowAdaptation(WorkflowAdaptationBase):
         state.setProperties(
             title=new_title,
             description=state.description,
-            transitions=list(state.transitions))
+            transitions=list(state.transitions),
+        )
         message = "The state title has been successfully changed."
         return True, message

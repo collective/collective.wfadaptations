@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <registry>
-  <record name="collective.wfadaptations.applied_adaptations" remove="True">
-  </record>
+  <record name="collective.wfadaptations.applied_adaptations"
+          remove="True"
+  >
+</record>
 </registry>

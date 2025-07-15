@@ -13,8 +13,10 @@ class IWorkflowAdaptation(Interface):
 
     """Interface for workflow adaptations."""
 
-    schema = Attribute("""Associated schema that provides parameters for the
-        workflow adaptation""")
+    schema = Attribute(
+        """Associated schema that provides parameters for the
+        workflow adaptation"""
+    )
 
     def patch_workflow(self, workflow_name, *parameters):
         """Patch the workflow.

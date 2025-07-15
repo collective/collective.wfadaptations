@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer
-    name="collective.wfadaptations"
-    interface="collective.wfadaptations.interfaces.ICollectiveWfadaptationsLayer"
+  <layer interface="collective.wfadaptations.interfaces.ICollectiveWfadaptationsLayer"
+         name="collective.wfadaptations"
   />
 </layers>

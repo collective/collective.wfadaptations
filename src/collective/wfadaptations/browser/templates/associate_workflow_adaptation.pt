@@ -1,9 +1,12 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      i18n:domain="collective.wfadaptations" tal:omit-tag="">
+      lang="en"
+      xml:lang="en"
+      tal:omit-tag=""
+      i18n:domain="collective.wfadaptations"
+>
 
-  <span tal:replace="structure view/contents" />
+  <span tal:replace="structure view/contents"></span>
 
 </html>
