@@ -2,14 +2,13 @@ Changelog
 =========
 
 
-2.0.0a1 (unreleased)
+2.0.0a1 (2026-01-15)
 --------------------
 
 - Added Plone 6.1 support.
   [chris-adam]
 - Added uninstall profile.
   [chris-adam]
-
 
 2.0.0a0 (2023-12-01)
 --------------------
